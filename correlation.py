@@ -33,7 +33,7 @@ def parabolic_func_by_matrix(x, y, nMatrix: list[list[int]]):
     """
     Находит функцию регрессии вида A*x^2 + B*x + C
 
-    Аргументы x, y определяют варианты случайных величин X, Y.    
+    Аргументы x, y определяют варианты случайных величин X, Y.
     Матрица n определяет частоты точек вида (x, y), где строки соответствуют y, столбцы - x
     """
     iMax = len(nMatrix)
@@ -99,3 +99,21 @@ def linear_func_by_matrix(x, y, nMatrix: list[list[int]]):
     k = (n * xys - xs * ys) / (n * qs - xs ** 2)
     b = (qs * ys - xs * xys) / (n * qs - xs ** 2)
     return k, b
+
+
+def Spearman(x, y):
+    '''Коэффициент ранговой корреляции Спирмена'''
+    n = len(x)
+    return 1 - 6 * sum((x[i] - y[i]) ** 2 for i in range(n)) / (n ** 3 - n)
+
+
+def Kendall(x, y):
+    '''Коэффициент ранговой корреляции Кендалла'''
+    X, Y = zip(*sorted(zip(x, y)))
+    n = len(X)
+    R = 0
+    for i in range(n):
+        for j in range(i, n):
+            if Y[i] < Y[j]:
+                R += 1
+    return 4 * R / (n * (n - 1)) - 1
